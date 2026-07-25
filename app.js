@@ -216,34 +216,43 @@ document.addEventListener("DOMContentLoaded", () => {
     "dailyReminderStatus"
   );
 
-  function openMenu() {
-    if (!slideMenu || !menuOverlay) {
-      return;
-    }
+ function openMenu() {
+  if (!slideMenu || !menuOverlay) {
+    return;
+  }
 
+  slideMenu.hidden = false;
+  menuOverlay.hidden = false;
+
+  requestAnimationFrame(() => {
     slideMenu.classList.add("open");
-    slideMenu.setAttribute("aria-hidden", "false");
+    menuOverlay.classList.add("open");
+  });
 
-    menuOverlay.hidden = false;
-    document.body.classList.add("menu-is-open");
+  slideMenu.setAttribute("aria-hidden", "false");
+  menuButton?.setAttribute("aria-expanded", "true");
 
-    menuButton?.setAttribute("aria-expanded", "true");
+  document.body.classList.add("menu-is-open");
+}
+
+ function closeMenu() {
+  if (!slideMenu || !menuOverlay) {
+    return;
   }
 
-  function closeMenu() {
-    if (!slideMenu || !menuOverlay) {
-      return;
-    }
+  slideMenu.classList.remove("open");
+  menuOverlay.classList.remove("open");
 
-    slideMenu.classList.remove("open");
-    slideMenu.setAttribute("aria-hidden", "true");
+  slideMenu.setAttribute("aria-hidden", "true");
+  menuButton?.setAttribute("aria-expanded", "false");
 
+  document.body.classList.remove("menu-is-open");
+
+  setTimeout(() => {
+    slideMenu.hidden = true;
     menuOverlay.hidden = true;
-    document.body.classList.remove("menu-is-open");
-
-    menuButton?.setAttribute("aria-expanded", "false");
-  }
-
+  }, 280);
+}
   function openReminderDialog() {
     closeMenu();
 
