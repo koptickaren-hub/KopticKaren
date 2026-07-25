@@ -222,3 +222,245 @@ main {
     );
   }
 }
+/* ===== Slide-out menu ===== */
+
+.menu-is-open {
+  overflow: hidden;
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(31, 19, 14, 0.52);
+  backdrop-filter: blur(4px);
+}
+
+.slide-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 210;
+
+  width: min(390px, 88vw);
+  padding:
+    max(24px, env(safe-area-inset-top))
+    24px
+    max(24px, env(safe-area-inset-bottom));
+
+  background: #fffaf3;
+  box-shadow: -20px 0 60px rgba(41, 22, 14, 0.22);
+
+  transform: translateX(105%);
+  visibility: hidden;
+
+  transition:
+    transform 0.28s ease,
+    visibility 0.28s ease;
+}
+
+.slide-menu.open {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.slide-menu-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.slide-menu-header div {
+  display: grid;
+}
+
+.slide-menu-header strong {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+}
+
+.slide-menu-header small {
+  color: var(--muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#closeMenuButton,
+.dialog-close {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+
+  border: 0;
+  border-radius: 50%;
+
+  color: var(--wine);
+  background: #f1e5d6;
+
+  font-size: 1.55rem;
+}
+
+.slide-menu-links {
+  display: grid;
+  margin: 20px 0;
+}
+
+.slide-menu-links a {
+  display: flex;
+  align-items: center;
+
+  min-height: 58px;
+  padding: 12px 4px;
+
+  border-bottom: 1px solid var(--line);
+
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+.slide-menu-links a::after {
+  content: "›";
+  margin-left: auto;
+  color: var(--wine);
+  font-size: 1.5rem;
+}
+
+.menu-reminder-button {
+  width: 100%;
+  min-height: 52px;
+
+  border: 0;
+  border-radius: 999px;
+
+  color: white;
+  background: var(--wine);
+
+  font-weight: 800;
+}
+
+/* ===== Reminder settings ===== */
+
+.reminder-dialog {
+  width: min(540px, calc(100% - 24px));
+  padding: 0;
+
+  border: 0;
+  border-radius: 24px;
+
+  background: transparent;
+}
+
+.reminder-dialog::backdrop {
+  background: rgba(31, 19, 14, 0.62);
+  backdrop-filter: blur(7px);
+}
+
+.reminder-card {
+  position: relative;
+  padding: 34px;
+
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 24px;
+
+  background: #fffaf3;
+  box-shadow: 0 25px 80px rgba(41, 22, 14, 0.28);
+}
+
+.reminder-card h2 {
+  margin: 4px 0 12px;
+
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.reminder-card > p:not(.eyebrow) {
+  color: var(--muted);
+}
+
+.reminder-time-field {
+  display: grid;
+  gap: 8px;
+
+  margin: 24px 0 12px;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.reminder-time-field input {
+  width: 100%;
+  min-height: 58px;
+  padding: 0 16px;
+
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  color: var(--ink);
+  background: white;
+
+  font-size: 16px;
+}
+
+.timezone-display {
+  font-family: var(--sans) !important;
+  font-size: 0.76rem !important;
+}
+
+.save-reminder-button,
+.test-reminder-button {
+  width: 100%;
+  min-height: 50px;
+  margin-top: 10px;
+
+  border-radius: 999px;
+
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.save-reminder-button {
+  border: 0;
+  color: white;
+  background: var(--wine);
+}
+
+.test-reminder-button {
+  border: 1px solid var(--line);
+  color: var(--wine);
+  background: white;
+}
+
+.reminder-status {
+  min-height: 22px;
+  margin: 14px 0 0;
+
+  color: var(--wine);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.reminder-note {
+  display: block;
+  margin-top: 12px;
+
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+@media (max-width: 600px) {
+  .reminder-card {
+    padding: 28px 20px;
+  }
+
+  .reminder-card h2 {
+    padding-right: 34px;
+    font-size: 2rem;
+  }
+}
