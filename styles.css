@@ -2562,3 +2562,24 @@ footer > p {
 .commemorations li button {
   margin-left: 0 !important;
 }
+
+.commemoration-name {
+  padding: 4px 0;
+
+  border: 0;
+
+  color: var(--ink);
+  background: transparent;
+
+  font-family: var(--serif);
+  font-size: 1rem;
+  text-align: left;
+
+  cursor: pointer;
+}
+.commemoration-name:hover,
+.commemoration-name:focus-visible {
+  color: var(--wine);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
