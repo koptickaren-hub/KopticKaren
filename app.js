@@ -178,3 +178,259 @@ function copticToJD(y,m,d){return 1825029.5-1+365*(y-1)+Math.floor(y/4)+30*(m-1)
 function formatTime(v){const[h,m]=v.split(":");return new Date(2000,0,1,+h,+m).toLocaleTimeString([],{hour:"numeric",minute:"2-digit"})}
 function toast(t){const x=$("#toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2500)}
 function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+/* ===== Functional menu and daily reminders ===== */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuButton = document.getElementById("menuButton");
+  const closeMenuButton = document.getElementById("closeMenuButton");
+  const menuOverlay = document.getElementById("menuOverlay");
+  const slideMenu = document.getElementById("slideMenu");
+
+  const reminderButton = document.getElementById("reminderButton");
+  const menuReminderButton = document.getElementById(
+    "menuReminderButton"
+  );
+
+  const reminderDialog = document.getElementById("reminderDialog");
+  const closeReminderButton = document.getElementById(
+    "closeReminderButton"
+  );
+
+  const reminderTime = document.getElementById(
+    "dailyReminderTime"
+  );
+
+  const reminderTimezone = document.getElementById(
+    "reminderTimezone"
+  );
+
+  const saveReminderButton = document.getElementById(
+    "saveDailyReminder"
+  );
+
+  const testReminderButton = document.getElementById(
+    "testDailyReminder"
+  );
+
+  const reminderStatus = document.getElementById(
+    "dailyReminderStatus"
+  );
+
+  function openMenu() {
+    if (!slideMenu || !menuOverlay) {
+      return;
+    }
+
+    slideMenu.classList.add("open");
+    slideMenu.setAttribute("aria-hidden", "false");
+
+    menuOverlay.hidden = false;
+    document.body.classList.add("menu-is-open");
+
+    menuButton?.setAttribute("aria-expanded", "true");
+  }
+
+  function closeMenu() {
+    if (!slideMenu || !menuOverlay) {
+      return;
+    }
+
+    slideMenu.classList.remove("open");
+    slideMenu.setAttribute("aria-hidden", "true");
+
+    menuOverlay.hidden = true;
+    document.body.classList.remove("menu-is-open");
+
+    menuButton?.setAttribute("aria-expanded", "false");
+  }
+
+  function openReminderDialog() {
+    closeMenu();
+
+    if (typeof reminderDialog?.showModal === "function") {
+      reminderDialog.showModal();
+    } else {
+      reminderDialog?.setAttribute("open", "");
+    }
+  }
+
+  function closeReminderDialog() {
+    reminderDialog?.close();
+  }
+
+  menuButton?.addEventListener("click", openMenu);
+  closeMenuButton?.addEventListener("click", closeMenu);
+  menuOverlay?.addEventListener("click", closeMenu);
+
+  document
+    .querySelectorAll(".slide-menu-links a")
+    .forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+  reminderButton?.addEventListener(
+    "click",
+    openReminderDialog
+  );
+
+  menuReminderButton?.addEventListener(
+    "click",
+    openReminderDialog
+  );
+
+  closeReminderButton?.addEventListener(
+    "click",
+    closeReminderDialog
+  );
+
+  reminderDialog?.addEventListener("click", (event) => {
+    if (event.target === reminderDialog) {
+      closeReminderDialog();
+    }
+  });
+
+  const timezone =
+    Intl.DateTimeFormat().resolvedOptions().timeZone ||
+    "Local timezone";
+
+  if (reminderTimezone) {
+    reminderTimezone.textContent = timezone;
+  }
+
+  const savedTime = localStorage.getItem(
+    "kopticKarenReminderTime"
+  );
+
+  if (savedTime && reminderTime) {
+    reminderTime.value = savedTime;
+  }
+
+  saveReminderButton?.addEventListener(
+    "click",
+    async () => {
+      const selectedTime = reminderTime?.value;
+
+      if (!selectedTime) {
+        reminderStatus.textContent =
+          "Please choose a reminder time.";
+
+        return;
+      }
+
+      localStorage.setItem(
+        "kopticKarenReminderTime",
+        selectedTime
+      );
+
+      if (!("Notification" in window)) {
+        reminderStatus.textContent =
+          "This browser does not support notifications.";
+
+        return;
+      }
+
+      try {
+        const permission =
+          await Notification.requestPermission();
+
+        if (permission === "granted") {
+          reminderStatus.textContent =
+            `Reminder preference saved for ${
+              formatReminderTime(selectedTime)
+            }.`;
+
+          localStorage.setItem(
+            "kopticKarenNotificationsEnabled",
+            "true"
+          );
+        } else {
+          reminderStatus.textContent =
+            "The time was saved, but notification permission was not granted.";
+        }
+      } catch (error) {
+        console.error(error);
+
+        reminderStatus.textContent =
+          "The time was saved, but notifications could not be enabled.";
+      }
+    }
+  );
+
+  testReminderButton?.addEventListener(
+    "click",
+    async () => {
+      if (!("Notification" in window)) {
+        reminderStatus.textContent =
+          "This browser does not support notifications.";
+
+        return;
+      }
+
+      const permission =
+        await Notification.requestPermission();
+
+      if (permission !== "granted") {
+        reminderStatus.textContent =
+          "Please allow notifications before testing.";
+
+        return;
+      }
+
+      try {
+        const registration =
+          await navigator.serviceWorker.ready;
+
+        await registration.showNotification(
+          "Today in the Synaxarium ✣",
+          {
+            body:
+              document.querySelector(
+                "#todaySaintName, #heroSaintName"
+              )?.textContent ||
+              "Open Koptic Karen to meet today’s saints.",
+
+            icon: "assets/icon-192.png",
+            badge: "assets/icon-192.png",
+
+            data: {
+              url: `${window.location.origin}${
+                window.location.pathname
+              }#today`
+            }
+          }
+        );
+
+        reminderStatus.textContent =
+          "Test notification sent.";
+      } catch (error) {
+        console.error(error);
+
+        reminderStatus.textContent =
+          "The test could not be sent. Install the app and try again.";
+      }
+    }
+  );
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+  });
+});
+
+function formatReminderTime(value) {
+  const [hours, minutes] = value
+    .split(":")
+    .map(Number);
+
+  return new Date(
+    2000,
+    0,
+    1,
+    hours,
+    minutes
+  ).toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit"
+  });
+}
