@@ -36,7 +36,6 @@ function bind(){
   $$(".install-tabs button").forEach(b=>b.onclick=()=>{$$(".install-tabs button").forEach(x=>x.classList.toggle("active",x===b));renderInstall(b.dataset.device)});
   $("#installButton").onclick=installApp;
   window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e});
-  $("#menuButton").onclick=()=>$("#sidebar").classList.toggle("mobile-open");
   $("#bottomMore").onclick=()=>location.hash="#install";
   $("#saveSaint").onclick=toggleSaved;
   $("#shareSaint").onclick=shareStory;
