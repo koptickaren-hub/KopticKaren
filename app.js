@@ -55,21 +55,81 @@ function selectGregorianDate(d){
   renderCalendar();
   if (currentStory) applyLicensedIcon(currentStory, $("#mainIcon"), $("#mainIconCredit"));
 }
-function renderCommemorations(){
-  $("#commemorationList").innerHTML=(currentDay.stories||[]).map((s,i)=>`<li><button class="comm-button" data-i="${i}">${esc(s.title)}</button></li>`).join("");
-  $$(".comm-button").forEach(b=>{b.style.cssText="border:0;background:none;padding:0;text-align:left;color:inherit";b.onclick=()=>{currentStory=currentDay.stories[+b.dataset.i];tab="story";$$(".tabs button").forEach(x=>x.classList.toggle("active",x.dataset.tab==="story"));renderStoryPanel()}});
+function renderCommemorations() {
+  const stories =
+    currentDay?.stories || [];
+
+  $("#commemorationList").innerHTML =
+    stories
+      .map(
+        (story, index) => `
+          <li>
+            <button
+              class="commemoration-name"
+              type="button"
+              data-story-index="${index}"
+            >
+              ${esc(story.title)}
+            </button>
+          </li>
+        `
+      )
+      .join("");
+
+  $$(".commemoration-name").forEach(
+    button => {
+      button.addEventListener(
+        "click",
+        () => {
+          currentStory =
+            stories[
+              Number(
+                button.dataset.storyIndex
+              )
+            ];
+
+          tab = "story";
+
+          $$(".tabs button").forEach(
+            tabButton => {
+              tabButton.classList.toggle(
+                "active",
+                tabButton.dataset.tab ===
+                  "story"
+              );
+            }
+          );
+
+          updateCurrentIcon();
+          renderStoryPanel();
+
+          document
+            .querySelector(".tabs")
+            ?.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+        }
+      );
+    }
+  );
 }
 function renderStoryPanel(){
   if(!currentStory){$("#storyContent").innerHTML="<p>No entry is available for this day.</p>";return}
   const reflection=makeReflection(currentStory.title);
   const apply=makeApplication(currentStory.title);
   const related=(currentDay.stories||[]).filter(s=>s.id!==currentStory.id);
-  let html="";
-  if(tab==="story"){
-    html=`<h2>${esc(currentStory.title)}</h2>
-      <p>${esc(currentStory.story)}</p>
-      <div class="source-notice"><strong>About the complete account:</strong> This website keeps the commemoration tied to its correct Coptic date and source. The complete historical wording remains available at the source rather than being silently republished as Koptic Karen content.</div>
-      <p><button data-read="${esc(currentStory.id)}">Open full entry</button></p>`;
+  let html = `
+  <h2>${esc(currentStory.title)}</h2>
+
+  <p>${esc(currentStory.story)}</p>
+
+  <div class="source-notice">
+    <strong>Historical source:</strong>
+    This account is connected to its corresponding Coptic date
+    and source reference.
+  </div>
+`;
   } else if(tab==="reflection"){
     html=`<h2>A contemporary reflection</h2><div class="reflection-box"><p>${reflection}</p></div><p>This reflection is original Koptic Karen devotional writing and is not part of the historical Synaxarium text.</p>`;
   } else if(tab==="apply"){
@@ -78,7 +138,6 @@ function renderStoryPanel(){
     html=`<h2>Also commemorated today</h2>${related.length?related.map(s=>`<p><button data-related="${esc(s.id)}">${esc(s.title)}</button></p>`).join(""):"<p>This is the only entry currently listed for this day.</p>"}`;
   }
   $("#storyContent").innerHTML=html;
-  $$("[data-read]").forEach(b=>b.onclick=()=>openStory(currentStory));
   $$("[data-related]").forEach(b=>b.onclick=()=>{currentStory=currentDay.stories.find(s=>s.id===b.dataset.related);tab="story";renderStoryPanel()});
 }
 function makeReflection(title){
