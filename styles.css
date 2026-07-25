@@ -2381,7 +2381,7 @@ footer > p {
   }
 
   .calendar-controls {
-    justify-content: space-between;
+    justify-: space-between;
   }
 
   .calendar-grid {
@@ -2543,4 +2543,22 @@ footer > p {
     transition-duration:
       0.001ms !important;
   }
+}
+/* Remove all decorative menu and commemoration symbols */
+.slide-menu-links a::after,
+.commemorations li::before {
+  content: none !important;
+  display: none !important;
+}
+
+.slide-menu-links a {
+  padding-right: 4px !important;
+}
+
+.commemorations li {
+  list-style: none !important;
+}
+
+.commemorations li button {
+  margin-left: 0 !important;
 }
