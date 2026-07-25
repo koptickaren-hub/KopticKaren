@@ -1,0 +1,102 @@
+media:
+  - name: saint_icons
+    label: Saint Icons
+    input: assets/icons
+    output: /assets/icons
+    categories:
+      - image
+
+content:
+  - name: saints
+    label: Saints and Commemorations
+    type: collection
+    path: content/saints
+    format: json
+
+    view:
+      fields:
+        - title
+        - copticMonth
+        - copticDay
+        - published
+      primary: title
+      sort:
+        - copticMonth
+        - copticDay
+        - title
+      search:
+        - title
+        - story
+        - copticMonth
+        - copticDay
+
+    fields:
+      - name: id
+        label: Entry ID
+        type: string
+        required: true
+
+      - name: title
+        label: Saint or Commemoration
+        type: string
+        required: true
+
+      - name: copticMonth
+        label: Coptic Month Number
+        type: number
+        required: true
+
+      - name: copticDay
+        label: Coptic Day
+        type: number
+        required: true
+
+      - name: story
+        label: Historical Synaxarium Story
+        type: rich-text
+        required: true
+        options:
+          format: html
+          media: false
+
+      - name: reflection
+        label: Contemporary Reflection
+        type: rich-text
+        options:
+          format: html
+          media: false
+
+      - name: application
+        label: How to Apply This Today
+        type: rich-text
+        options:
+          format: html
+          media: false
+
+      - name: prayer
+        label: Closing Prayer
+        type: rich-text
+        options:
+          format: html
+          media: false
+
+      - name: icon
+        label: Saint Icon
+        type: image
+        options:
+          media: saint_icons
+          path: assets/icons
+          rename: true
+
+      - name: iconCredit
+        label: Icon Credit and Permission
+        type: text
+
+      - name: sourceUrl
+        label: Historical Source Link
+        type: string
+
+      - name: published
+        label: Published
+        type: boolean
+        default: false
