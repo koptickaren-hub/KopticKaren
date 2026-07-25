@@ -784,11 +784,10 @@ main {
 }
 
 .commemorations li::before {
-  content: "âœ£";
+  content: "";
 
-  margin-right: 10px;
+  margin-right: 0;
 
-  color: var(--gold);
 }
 
 .commemorations button {
@@ -1728,7 +1727,7 @@ dialog::backdrop {
 }
 
 .slide-menu-links a::after {
-  content: "â€º";
+  content: "";
 
   margin-left: auto;
 
