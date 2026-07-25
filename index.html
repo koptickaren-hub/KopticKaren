@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#5f0712">
+  <meta name="description" content="Koptic Karen — daily Coptic Synaxarium stories, saints, prayer, and Coptic life.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Koptic Karen">
+  <title>Koptic Karen | Synaxarium</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <script src="data/synaxarium-data.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <a href="#today" class="brand">
+      <img src="assets/koptic-karen-logo.png" alt="Koptic Karen logo">
+      <span>
+        <strong>Koptic Karen</strong>
+        <small>SYNAXARIUM • SAINTS &amp; COPTIC LIFE</small>
+      </span>
+    </a>
+    <div class="header-actions">
+      <button data-open="reminder"><span>♧</span><small>Reminders</small></button>
+      <button id="savedHeader"><span>♡</span><small>Saved</small></button>
+      <button id="searchHeader"><span>⌕</span><small>Search</small></button>
+      <button id="menuButton"><span>☰</span><small>Menu</small></button>
+    </div>
+  </header>
+
+  <div class="glory-bar">✣ <span>Glory be to Jesus Christ forever.</span> ✣</div>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="Main navigation">
+        <a class="active" href="#today"><span>⌂</span>Home</a>
+        <a href="#today"><span>▣</span>Today</a>
+        <a href="#calendar"><span>▦</span>Calendar</a>
+        <a href="#saints"><span>♧</span>Saints</a>
+        <a href="#prayer"><span>♢</span>Prayers</a>
+        <a href="#apparel"><span>✣</span>Apparel</a>
+        <a href="#install"><span>▯</span>App Guide</a>
+      </nav>
+    </aside>
+
+    <main id="main">
+      <section class="apparel-rail" id="apparel">
+        <div class="rail-copy">
+          <p class="eyebrow">• COMING SOON •</p>
+          <h2>KOPTIC KAREN APPAREL</h2>
+          <span class="coptic-cross">✣</span>
+          <p class="rail-tagline">Designed with faith.<br>Made for His glory.</p>
+          <form id="waitlistForm">
+            <input id="waitlistEmail" type="email" placeholder="Email for first drop" required>
+            <button>Join the waitlist →</button>
+          </form>
+          <p id="waitlistStatus" class="status"></p>
+        </div>
+        <img src="assets/apparel-hoodie.jpg" alt="Realistic cream Koptic Karen hoodie preview">
+        <div class="rail-bottom">
+          <h3>Stay Inspired</h3>
+          <p>Daily reflections, saints, and Coptic encouragement—straight to you.</p>
+          <div class="social-row"><span>◎</span><span>♪</span><span>▶</span><span>✉</span></div>
+        </div>
+      </section>
+
+      <section class="content-column">
+        <section class="today-card" id="today">
+          <div class="date-head">
+            <div>
+              <p class="eyebrow">TODAY IN THE SYNAXARIUM</p>
+              <h1 id="displayCopticDate">Loading…</h1>
+              <div class="date-pair">
+                <span><small>COPTIC DATE</small><strong id="fullCopticDate">—</strong></span>
+                <span><small>GREGORIAN DATE</small><strong id="gregorianDate">—</strong></span>
+              </div>
+            </div>
+            <div class="icon-stage" id="iconStage">
+              <img id="mainIcon" src="assets/icon-unavailable.svg" alt="">
+              <span class="icon-note">Icon shown when a suitable, permission-approved image is available.</span>
+              <small class="main-icon-credit" id="mainIconCredit"></small>
+            </div>
+          </div>
+
+          <div class="commemorations">
+            <h2>COMMEMORATIONS</h2>
+            <ul id="commemorationList"></ul>
+          </div>
+
+          <div class="tabs" role="tablist">
+            <button class="active" data-tab="story">The Story</button>
+            <button data-tab="reflection">Reflection</button>
+            <button data-tab="apply">How to Apply This Today</button>
+            <button data-tab="related">Related Saints</button>
+          </div>
+
+          <article class="story-panel" id="storyPanel">
+            <div id="storyContent"></div>
+          </article>
+        </section>
+
+        <section class="calendar-section" id="calendar">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">THE COPTIC YEAR</p>
+              <h2>Browse every day.</h2>
+            </div>
+            <div class="calendar-controls">
+              <button id="prevMonth" aria-label="Previous month">←</button>
+              <strong id="calendarTitle"></strong>
+              <button id="nextMonth" aria-label="Next month">→</button>
+            </div>
+          </div>
+          <div class="calendar-grid" id="calendarGrid"></div>
+        </section>
+
+        <section class="saints-section" id="saints">
+          <div class="section-title-row">
+            <div>
+              <p class="eyebrow">SAINTS LIBRARY</p>
+              <h2>Look up every commemoration.</h2>
+            </div>
+            <label class="search-box">
+              <span>⌕</span>
+              <input id="saintSearch" type="search" placeholder="Search a saint, feast, pope, or Coptic date">
+            </label>
+          </div>
+          <div class="result-meta" id="resultMeta"></div>
+          <div class="saints-grid" id="saintsGrid"></div>
+          <button class="load-more" id="loadMore">Load more</button>
+        </section>
+
+        <section class="prayer-section" id="prayer">
+          <div>
+            <p class="eyebrow light">ANONYMOUS PRAYER REQUESTS</p>
+            <h2>Your name is not required.<br>Your prayer still matters.</h2>
+            <p>Share what is on your heart. Please leave out names, phone numbers, addresses, or other identifying information.</p>
+          </div>
+          <form id="prayerForm">
+            <textarea id="prayerText" maxlength="1200" minlength="10" required placeholder="How can we pray for you?"></textarea>
+            <select id="prayerCategory">
+              <option>General prayer</option>
+              <option>Healing</option>
+              <option>Family</option>
+              <option>Guidance</option>
+              <option>Grief and comfort</option>
+              <option>Thanksgiving</option>
+            </select>
+            <label><input type="checkbox" required> I understand this is a prayer ministry and not emergency or professional care.</label>
+            <button>Submit anonymously</button>
+            <p id="prayerStatus" class="status"></p>
+          </form>
+        </section>
+
+        <section class="install-section" id="install">
+          <div class="install-phone">
+            <img src="assets/icon-192.png" alt="">
+            <span>Koptic Karen</span>
+          </div>
+          <div>
+            <p class="eyebrow">ADD TO YOUR PHONE</p>
+            <h2>Open it like an app.</h2>
+            <p>Install Koptic Karen on your Home Screen for quick access to the calendar, saved saints, prayer requests, and daily reminders.</p>
+            <div class="install-tabs">
+              <button class="active" data-device="iphone">iPhone</button>
+              <button data-device="android">Android</button>
+            </div>
+            <ol id="installSteps"></ol>
+            <button class="primary-button" id="installButton">Add to Home Screen</button>
+          </div>
+        </section>
+      </section>
+
+      <aside class="right-rail">
+        <article class="utility-card">
+          <p class="eyebrow">DAILY REMINDER</p>
+          <h3>Meet the saints each morning.</h3>
+          <p>Choose the time that works for you.</p>
+          <button class="small-button" data-open="reminder">Set reminder</button>
+        </article>
+        <article class="utility-card prayer-mini">
+          <p class="eyebrow">ANONYMOUS PRAYER REQUESTS</p>
+          <p>Place your prayer request anonymously. The prayer ministry will pray for you.</p>
+          <a class="small-button" href="#prayer">Submit prayer</a>
+        </article>
+        <article class="utility-card">
+          <p class="eyebrow">QUICK LINKS</p>
+          <a href="#calendar">▦ Coptic Calendar <span>›</span></a>
+          <a href="#saints">♧ All Saints <span>›</span></a>
+          <a href="#today">✣ Today’s Synaxarium <span>›</span></a>
+          <a href="#install">▯ App Guide <span>›</span></a>
+        </article>
+      </aside>
+    </main>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="#today"><span>⌂</span>Home</a>
+    <a href="#calendar"><span>▦</span>Calendar</a>
+    <a href="#saints"><span>♧</span>Saints</a>
+    <a href="#prayer"><span>♢</span>Prayers</a>
+    <button id="bottomMore"><span>•••</span>More</button>
+  </nav>
+
+  <dialog id="storyModal">
+    <div class="modal-card">
+      <button class="modal-close" data-close>×</button>
+      <div class="modal-saint-icon"><img id="modalSaintIcon" src="assets/icon-unavailable.svg" alt=""><small id="modalIconCredit"></small></div>
+      <p class="eyebrow" id="modalDate"></p>
+      <h2 id="modalTitle"></h2>
+      <div id="modalStory"></div>
+      <div class="modal-actions">
+        <button id="saveSaint" class="primary-button">♡ Save</button>
+        <button id="shareSaint">Share</button>
+        <a id="sourceLink" target="_blank" rel="noopener">Read complete source account ↗</a>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="reminderModal">
+    <form class="modal-card" method="dialog" id="reminderForm">
+      <button class="modal-close" value="cancel">×</button>
+      <p class="eyebrow">DAILY SAINT REMINDER</p>
+      <h2>What time should we meet?</h2>
+      <p>Choose a time. This preview saves your preference on this device. Reliable background delivery requires the included push-notification backend after deployment.</p>
+      <input id="reminderTime" type="time" value="08:00" required>
+      <button type="button" class="primary-button" id="saveReminder">Save reminder time</button>
+      <p id="reminderStatus" class="status"></p>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status"></div>
+  <footer>
+    <img src="assets/koptic-karen-logo.png" alt="">
+    <div>
+      <strong>Koptic Karen</strong>
+      <p>Synaxarium • saints • prayer • Coptic life</p>
+    </div>
+    <p>Historical commemorations are organized by their Coptic calendar dates. Original Koptic Karen reflections are clearly separated from source accounts.</p>
+  </footer>
+</body>
+</html>
