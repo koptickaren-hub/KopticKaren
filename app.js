@@ -181,7 +181,7 @@ function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt
 /* ===== Functional menu and daily reminders ===== */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const menuButton = document.getElementById("menuButton");
+  const menuButtons = document.querySelectorAll(".menu-trigger");
   const closeMenuButton = document.getElementById("closeMenuButton");
   const menuOverlay = document.getElementById("menuOverlay");
   const slideMenu = document.getElementById("slideMenu");
@@ -230,8 +230,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   slideMenu.setAttribute("aria-hidden", "false");
-  menuButton?.setAttribute("aria-expanded", "true");
-
+  menuButtons.forEach((button) => {
+    button.setAttribute("aria-expanded", "true");
+  });
   document.body.classList.add("menu-is-open");
 }
 
@@ -244,8 +245,9 @@ document.addEventListener("DOMContentLoaded", () => {
   menuOverlay.classList.remove("open");
 
   slideMenu.setAttribute("aria-hidden", "true");
-  menuButton?.setAttribute("aria-expanded", "false");
-
+  menuButtons.forEach((button) => {
+    button.setAttribute("aria-expanded", "false");
+  });
   document.body.classList.remove("menu-is-open");
 
   setTimeout(() => {
@@ -267,7 +269,9 @@ document.addEventListener("DOMContentLoaded", () => {
     reminderDialog?.close();
   }
 
-  menuButton?.addEventListener("click", openMenu);
+  menuButtons.forEach((button) => {
+  button.addEventListener("click", openMenu);
+  });
   closeMenuButton?.addEventListener("click", closeMenu);
   menuOverlay?.addEventListener("click", closeMenu);
 
