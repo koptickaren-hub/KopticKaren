@@ -2,168 +2,243 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover">
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
   <meta name="theme-color" content="#5f0712">
+
   <meta
     name="description"
-    content="Koptic Karen — daily Coptic Synaxarium stories, saints, prayer, and Coptic life.">
+    content="Koptic Karen — daily Coptic Synaxarium stories, saints, prayer, and Coptic life."
+  >
+
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Koptic Karen">
+
   <title>Koptic Karen | Synaxarium</title>
+
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
   <link rel="stylesheet" href="styles.css">
+
   <script src="data/synaxarium-data.js"></script>
   <script src="app.js" defer></script>
 </head>
-   </button>
-  </div>
 
-  <nav class="slide-menu-links" aria-label="Expanded navigation">
-    <a href="#today">Today’s Synaxarium</a>
-    <a href="#calendar">Coptic Calendar</a>
-    <a href="#saints">All Saints</a>
-    <a href="#prayer">Prayer Requests</a>
-    <a href="#apparel">Koptic Karen Apparel</a>
-    <a href="#install">Install the App</a>
-  </nav>
-
-  <button class="menu-reminder-button" id="menuReminderButton" type="button">
-    Set Daily Reminder
-  </button>
-</aside>
-  <dialog class="reminder-dialog" id="reminderDialog">
-  <div class="reminder-card">
-    <button
-      class="dialog-close"
-      id="closeReminderButton"
-      type="button"
-      aria-label="Close reminder settings"
-    >
-      ×
-    </button>
-
-    <p class="eyebrow">DAILY SYNAXARIUM REMINDER</p>
-
-    <h2>What time should we meet?</h2>
-
-    <p>
-      Choose when you would like to receive the day’s saints,
-      commemorations, icon, and reflection.
-    </p>
-
-    <label class="reminder-time-field">
-      Daily reminder time
-
-      <input
-        id="dailyReminderTime"
-        type="time"
-        value="08:00"
-        required
-      >
-    </label>
-
-    <p class="timezone-display">
-      Your timezone:
-      <strong id="reminderTimezone">Detecting…</strong>
-    </p>
-
-    <button class="save-reminder-button" id="saveDailyReminder" type="button">
-      Enable Daily Reminder
-    </button>
-
-    <button class="test-reminder-button" id="testDailyReminder" type="button">
-      Send Test Notification
-    </button>
-
-    <p class="reminder-status" id="dailyReminderStatus" role="status"></p>
-
-    <small class="reminder-note">
-      On iPhone, add Koptic Karen to your Home Screen before enabling
-      notifications. Reliable notifications after the app is closed will
-      require a web-push service when the site is fully launched.
-    </small>
-  </div>
-</dialog>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- =========================
+       TOP HEADER
+  ========================== -->
   <header class="topbar">
-    <a href="#today" class="brand">
-      <img src="assets/koptic-karen-logo.png" alt="Koptic Karen logo">
+    <a href="#today" class="brand" aria-label="Koptic Karen home">
+      <img
+        src="assets/koptic-karen-logo.png"
+        alt="Koptic Karen logo"
+      >
+
       <span>
         <strong>Koptic Karen</strong>
         <small>SYNAXARIUM • SAINTS &amp; COPTIC LIFE</small>
       </span>
     </a>
+
     <div class="header-actions">
-      <button id="reminderButton" type="button">
+      <button
+        id="headerReminderButton"
+        type="button"
+        data-open="reminder"
+        aria-label="Open daily reminder settings"
+      >
         <span aria-hidden="true">♧</span>
         <small>Reminders</small>
-    </button>      
-      <button id="savedHeader"><span>♡</span><small>Saved</small></button>
-      <button id="searchHeader"><span>⌕</span><small>Search</small></button>
-      <button id="menuButton" type="button" aria-expanded="false">
+      </button>
+
+      <button
+        id="savedHeader"
+        type="button"
+        aria-label="View saved saints"
+      >
+        <span aria-hidden="true">♡</span>
+        <small>Saved</small>
+      </button>
+
+      <button
+        id="searchHeader"
+        type="button"
+        aria-label="Search saints"
+      >
+        <span aria-hidden="true">⌕</span>
+        <small>Search</small>
+      </button>
+
+      <button
+        id="hamburgerMenuButton"
+        class="menu-trigger"
+        type="button"
+        aria-expanded="false"
+        aria-controls="slideMenu"
+        aria-label="Open menu"
+      >
         <span aria-hidden="true">☰</span>
         <small>Menu</small>
-</button>    
+      </button>
     </div>
   </header>
 
-  <div class="glory-bar">✣ <span>Glory be to Jesus Christ forever.</span> ✣</div>
+  <div class="glory-bar">
+    ✣
+    <span>Glory be to Jesus Christ forever.</span>
+    ✣
+  </div>
 
+  <!-- =========================
+       MAIN APP LAYOUT
+  ========================== -->
   <div class="app-layout">
-      <aside class="slide-menu" id="slideMenu" aria-hidden="true" hidden>      
-       <nav aria-label="Main navigation">
-        <a class="active" href="#today"><span>⌂</span>Home</a>
-        <a href="#today"><span>▣</span>Today</a>
-        <a href="#calendar"><span>▦</span>Calendar</a>
-        <a href="#saints"><span>♧</span>Saints</a>
-        <a href="#prayer"><span>♢</span>Prayers</a>
-        <a href="#apparel"><span>✣</span>Apparel</a>
-        <a href="#install"><span>▯</span>App Guide</a>
+
+    <!-- Desktop sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <nav aria-label="Main navigation">
+        <a class="active" href="#today">
+          <span aria-hidden="true">⌂</span>
+          Home
+        </a>
+
+        <a href="#today">
+          <span aria-hidden="true">▣</span>
+          Today
+        </a>
+
+        <a href="#calendar">
+          <span aria-hidden="true">▦</span>
+          Calendar
+        </a>
+
+        <a href="#saints">
+          <span aria-hidden="true">♧</span>
+          Saints
+        </a>
+
+        <a href="#prayer">
+          <span aria-hidden="true">♢</span>
+          Prayers
+        </a>
+
+        <a href="#apparel">
+          <span aria-hidden="true">✣</span>
+          Apparel
+        </a>
+
+        <a href="#install">
+          <span aria-hidden="true">▯</span>
+          App Guide
+        </a>
       </nav>
     </aside>
 
     <main id="main">
+
+      <!-- =========================
+           APPAREL RAIL
+      ========================== -->
       <section class="apparel-rail" id="apparel">
         <div class="rail-copy">
           <p class="eyebrow">• COMING SOON •</p>
           <h2>KOPTIC KAREN APPAREL</h2>
-          <span class="coptic-cross">✣</span>
-          <p class="rail-tagline">Designed with faith.<br>Made for His glory.</p>
+          <span class="coptic-cross" aria-hidden="true">✣</span>
+
+          <p class="rail-tagline">
+            Designed with faith.<br>
+            Made for His glory.
+          </p>
+
           <form id="waitlistForm">
-            <input id="waitlistEmail" type="email" placeholder="Email for first drop" required>
-            <button>Join the waitlist →</button>
+            <label class="sr-only" for="waitlistEmail">
+              Email for the first apparel drop
+            </label>
+
+            <input
+              id="waitlistEmail"
+              type="email"
+              placeholder="Email for first drop"
+              required
+            >
+
+            <button type="submit">
+              Join the waitlist →
+            </button>
           </form>
-          <p id="waitlistStatus" class="status"></p>
+
+          <p id="waitlistStatus" class="status" role="status"></p>
         </div>
-        <img src="assets/apparel-hoodie.jpg" alt="Realistic cream Koptic Karen hoodie preview">
+
+        <img
+          src="assets/apparel-hoodie.jpg"
+          alt="Cream Koptic Karen hoodie preview"
+        >
+
         <div class="rail-bottom">
           <h3>Stay Inspired</h3>
-          <p>Daily reflections, saints, and Coptic encouragement—straight to you.</p>
-          <div class="social-row"><span>◎</span><span>♪</span><span>▶</span><span>✉</span></div>
+
+          <p>
+            Daily reflections, saints, and Coptic encouragement—
+            straight to you.
+          </p>
+
+          <div class="social-row" aria-label="Social media">
+            <span aria-hidden="true">◎</span>
+            <span aria-hidden="true">♪</span>
+            <span aria-hidden="true">▶</span>
+            <span aria-hidden="true">✉</span>
+          </div>
         </div>
       </section>
 
+      <!-- =========================
+           CENTER CONTENT
+      ========================== -->
       <section class="content-column">
+
+        <!-- TODAY -->
         <section class="today-card" id="today">
           <div class="date-head">
             <div>
               <p class="eyebrow">TODAY IN THE SYNAXARIUM</p>
-              <h1 id="displayCopticDate">Loading…</h1>
+
+              <h1 id="displayCopticDate">
+                Loading…
+              </h1>
+
               <div class="date-pair">
-                <span><small>COPTIC DATE</small><strong id="fullCopticDate">—</strong></span>
-                <span><small>GREGORIAN DATE</small><strong id="gregorianDate">—</strong></span>
+                <span>
+                  <small>COPTIC DATE</small>
+                  <strong id="fullCopticDate">—</strong>
+                </span>
+
+                <span>
+                  <small>GREGORIAN DATE</small>
+                  <strong id="gregorianDate">—</strong>
+                </span>
               </div>
             </div>
+
             <div class="icon-stage" id="iconStage">
-              <img id="mainIcon" src="assets/icon-unavailable.svg" alt="">
-              <span class="icon-note">Icon shown when a suitable, permission-approved image is available.</span>
-              <small class="main-icon-credit" id="mainIconCredit"></small>
+              <img
+                id="mainIcon"
+                src="assets/icon-unavailable.svg"
+                alt="Saint icon"
+              >
+
+              <span class="icon-note">
+                Icon shown when a suitable,
+                permission-approved image is available.
+              </span>
             </div>
           </div>
 
@@ -172,11 +247,35 @@
             <ul id="commemorationList"></ul>
           </div>
 
-          <div class="tabs" role="tablist">
-            <button class="active" data-tab="story">The Story</button>
-            <button data-tab="reflection">Reflection</button>
-            <button data-tab="apply">How to Apply This Today</button>
-            <button data-tab="related">Related Saints</button>
+          <div class="tabs" role="tablist" aria-label="Saint entry sections">
+            <button
+              class="active"
+              type="button"
+              data-tab="story"
+            >
+              The Story
+            </button>
+
+            <button
+              type="button"
+              data-tab="reflection"
+            >
+              Reflection
+            </button>
+
+            <button
+              type="button"
+              data-tab="apply"
+            >
+              How to Apply This Today
+            </button>
+
+            <button
+              type="button"
+              data-tab="related"
+            >
+              Related Saints
+            </button>
           </div>
 
           <article class="story-panel" id="storyPanel">
@@ -184,45 +283,113 @@
           </article>
         </section>
 
+        <!-- CALENDAR -->
         <section class="calendar-section" id="calendar">
           <div class="section-title-row">
             <div>
               <p class="eyebrow">THE COPTIC YEAR</p>
               <h2>Browse every day.</h2>
             </div>
+
             <div class="calendar-controls">
-              <button id="prevMonth" aria-label="Previous month">←</button>
+              <button
+                id="prevMonth"
+                type="button"
+                aria-label="Previous month"
+              >
+                ←
+              </button>
+
               <strong id="calendarTitle"></strong>
-              <button id="nextMonth" aria-label="Next month">→</button>
+
+              <button
+                id="nextMonth"
+                type="button"
+                aria-label="Next month"
+              >
+                →
+              </button>
             </div>
           </div>
-          <div class="calendar-grid" id="calendarGrid"></div>
+
+          <div
+            class="calendar-grid"
+            id="calendarGrid"
+            aria-live="polite"
+          ></div>
         </section>
 
+        <!-- SAINTS LIBRARY -->
         <section class="saints-section" id="saints">
           <div class="section-title-row">
             <div>
               <p class="eyebrow">SAINTS LIBRARY</p>
               <h2>Look up every commemoration.</h2>
             </div>
+
             <label class="search-box">
-              <span>⌕</span>
-              <input id="saintSearch" type="search" placeholder="Search a saint, feast, pope, or Coptic date">
+              <span aria-hidden="true">⌕</span>
+
+              <span class="sr-only">
+                Search saints and commemorations
+              </span>
+
+              <input
+                id="saintSearch"
+                type="search"
+                placeholder="Search a saint, feast, pope, or Coptic date"
+              >
             </label>
           </div>
+
           <div class="result-meta" id="resultMeta"></div>
+
           <div class="saints-grid" id="saintsGrid"></div>
-          <button class="load-more" id="loadMore">Load more</button>
+
+          <button
+            class="load-more"
+            id="loadMore"
+            type="button"
+          >
+            Load more
+          </button>
         </section>
 
+        <!-- PRAYER REQUESTS -->
         <section class="prayer-section" id="prayer">
           <div>
-            <p class="eyebrow light">ANONYMOUS PRAYER REQUESTS</p>
-            <h2>Your name is not required.<br>Your prayer still matters.</h2>
-            <p>Share what is on your heart. Please leave out names, phone numbers, addresses, or other identifying information.</p>
+            <p class="eyebrow light">
+              ANONYMOUS PRAYER REQUESTS
+            </p>
+
+            <h2>
+              Your name is not required.<br>
+              Your prayer still matters.
+            </h2>
+
+            <p>
+              Share what is on your heart. Please leave out names,
+              phone numbers, addresses, or other identifying information.
+            </p>
           </div>
+
           <form id="prayerForm">
-            <textarea id="prayerText" maxlength="1200" minlength="10" required placeholder="How can we pray for you?"></textarea>
+            <label class="sr-only" for="prayerText">
+              Prayer request
+            </label>
+
+            <textarea
+              id="prayerText"
+              maxlength="1200"
+              minlength="10"
+              required
+              placeholder="How can we pray for you?"
+            ></textarea>
+
+            <label class="sr-only" for="prayerCategory">
+              Prayer category
+            </label>
+
             <select id="prayerCategory">
               <option>General prayer</option>
               <option>Healing</option>
@@ -231,97 +398,688 @@
               <option>Grief and comfort</option>
               <option>Thanksgiving</option>
             </select>
-            <label><input type="checkbox" required> I understand this is a prayer ministry and not emergency or professional care.</label>
-            <button>Submit anonymously</button>
-            <p id="prayerStatus" class="status"></p>
+
+            <label>
+              <input type="checkbox" required>
+
+              I understand this is a prayer ministry and not
+              emergency or professional care.
+            </label>
+
+            <button type="submit">
+              Submit anonymously
+            </button>
+
+            <p
+              id="prayerStatus"
+              class="status"
+              role="status"
+            ></p>
           </form>
         </section>
 
+        <!-- INSTALL APP -->
         <section class="install-section" id="install">
           <div class="install-phone">
-            <img src="assets/icon-192.png" alt="">
+            <img
+              src="assets/icon-192.png"
+              alt="Koptic Karen app icon"
+            >
+
             <span>Koptic Karen</span>
           </div>
+
           <div>
             <p class="eyebrow">ADD TO YOUR PHONE</p>
+
             <h2>Open it like an app.</h2>
-            <p>Install Koptic Karen on your Home Screen for quick access to the calendar, saved saints, prayer requests, and daily reminders.</p>
+
+            <p>
+              Install Koptic Karen on your Home Screen for quick
+              access to the calendar, saved saints, prayer requests,
+              and daily reminders.
+            </p>
+
             <div class="install-tabs">
-              <button class="active" data-device="iphone">iPhone</button>
-              <button data-device="android">Android</button>
+              <button
+                class="active"
+                type="button"
+                data-device="iphone"
+              >
+                iPhone
+              </button>
+
+              <button
+                type="button"
+                data-device="android"
+              >
+                Android
+              </button>
             </div>
+
             <ol id="installSteps"></ol>
-            <button class="primary-button" id="installButton">Add to Home Screen</button>
+
+            <button
+              class="primary-button"
+              id="installButton"
+              type="button"
+            >
+              Add to Home Screen
+            </button>
           </div>
         </section>
       </section>
 
+      <!-- =========================
+           RIGHT DESKTOP RAIL
+      ========================== -->
       <aside class="right-rail">
         <article class="utility-card">
           <p class="eyebrow">DAILY REMINDER</p>
+
           <h3>Meet the saints each morning.</h3>
-          <p>Choose the time that works for you.</p>
-          <button class="small-button" data-open="reminder">Set reminder</button>
+
+          <p>
+            Choose the time that works for you.
+          </p>
+
+          <button
+            class="small-button"
+            type="button"
+            data-open="reminder"
+          >
+            Set reminder
+          </button>
         </article>
+
         <article class="utility-card prayer-mini">
-          <p class="eyebrow">ANONYMOUS PRAYER REQUESTS</p>
-          <p>Place your prayer request anonymously. The prayer ministry will pray for you.</p>
-          <a class="small-button" href="#prayer">Submit prayer</a>
+          <p class="eyebrow">
+            ANONYMOUS PRAYER REQUESTS
+          </p>
+
+          <p>
+            Place your prayer request anonymously.
+            The prayer ministry will pray for you.
+          </p>
+
+          <a class="small-button" href="#prayer">
+            Submit prayer
+          </a>
         </article>
+
         <article class="utility-card">
           <p class="eyebrow">QUICK LINKS</p>
-          <a href="#calendar">▦ Coptic Calendar <span>›</span></a>
-          <a href="#saints">♧ All Saints <span>›</span></a>
-          <a href="#today">✣ Today’s Synaxarium <span>›</span></a>
-          <a href="#install">▯ App Guide <span>›</span></a>
+
+          <a href="#calendar">
+            ▦ Coptic Calendar
+            <span>›</span>
+          </a>
+
+          <a href="#saints">
+            ♧ All Saints
+            <span>›</span>
+          </a>
+
+          <a href="#today">
+            ✣ Today’s Synaxarium
+            <span>›</span>
+          </a>
+
+          <a href="#install">
+            ▯ App Guide
+            <span>›</span>
+          </a>
         </article>
       </aside>
     </main>
   </div>
 
-  <nav class="bottom-nav">
-    <a href="#today"><span>⌂</span>Home</a>
-    <a href="#calendar"><span>▦</span>Calendar</a>
-    <a href="#saints"><span>♧</span>Saints</a>
-    <a href="#prayer"><span>♢</span>Prayers</a>
-    <button id="bottomMore"><span>•••</span>More</button>
+  <!-- =========================
+       MOBILE BOTTOM NAVIGATION
+  ========================== -->
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <a href="#today">
+      <span aria-hidden="true">⌂</span>
+      Home
+    </a>
+
+    <a href="#calendar">
+      <span aria-hidden="true">▦</span>
+      Calendar
+    </a>
+
+    <a href="#saints">
+      <span aria-hidden="true">♧</span>
+      Saints
+    </a>
+
+    <a href="#prayer">
+      <span aria-hidden="true">♢</span>
+      Prayers
+    </a>
+
+    <button
+      class="menu-trigger"
+      id="bottomMore"
+      type="button"
+      aria-expanded="false"
+      aria-controls="slideMenu"
+    >
+      <span aria-hidden="true">•••</span>
+      More
+    </button>
   </nav>
 
+  <!-- =========================
+       SAINT STORY MODAL
+  ========================== -->
   <dialog id="storyModal">
     <div class="modal-card">
-      <button class="modal-close" data-close>×</button>
-      <div class="modal-saint-icon"><img id="modalSaintIcon" src="assets/icon-unavailable.svg" alt=""><small id="modalIconCredit"></small></div>
+      <button
+        class="modal-close"
+        type="button"
+        data-close
+        aria-label="Close saint entry"
+      >
+        ×
+      </button>
+
       <p class="eyebrow" id="modalDate"></p>
       <h2 id="modalTitle"></h2>
+
       <div id="modalStory"></div>
+
       <div class="modal-actions">
-        <button id="saveSaint" class="primary-button">♡ Save</button>
-        <button id="shareSaint">Share</button>
-        <a id="sourceLink" target="_blank" rel="noopener">Read complete source account ↗</a>
+        <button
+          id="saveSaint"
+          class="primary-button"
+          type="button"
+        >
+          ♡ Save
+        </button>
+
+        <button id="shareSaint" type="button">
+          Share
+        </button>
+
+        <a
+          id="sourceLink"
+          target="_blank"
+          rel="noopener"
+        >
+          Read complete source account ↗
+        </a>
       </div>
     </div>
   </dialog>
 
-  <dialog id="reminderModal">
-    <form class="modal-card" method="dialog" id="reminderForm">
-      <button class="modal-close" value="cancel">×</button>
-      <p class="eyebrow">DAILY SAINT REMINDER</p>
+  <!-- =========================
+       HIDDEN HAMBURGER MENU
+  ========================== -->
+  <div
+    class="menu-overlay"
+    id="menuOverlay"
+    hidden
+  ></div>
+
+  <aside
+    class="slide-menu"
+    id="slideMenu"
+    aria-hidden="true"
+    hidden
+  >
+    <div class="slide-menu-header">
+      <div>
+        <strong>Koptic Karen</strong>
+
+        <small>
+          Synaxarium • Saints &amp; Coptic Life
+        </small>
+      </div>
+
+      <button
+        id="closeMenuButton"
+        type="button"
+        aria-label="Close menu"
+      >
+        ×
+      </button>
+    </div>
+
+    <nav
+      class="slide-menu-links"
+      aria-label="Expanded navigation"
+    >
+      <a href="#today">
+        Today’s Synaxarium
+      </a>
+
+      <a href="#calendar">
+        Coptic Calendar
+      </a>
+
+      <a href="#saints">
+        All Saints
+      </a>
+
+      <a href="#prayer">
+        Prayer Requests
+      </a>
+
+      <a href="#apparel">
+        Koptic Karen Apparel
+      </a>
+
+      <a href="#install">
+        Install the App
+      </a>
+    </nav>
+
+    <button
+      class="menu-reminder-button"
+      id="menuReminderButton"
+      type="button"
+      data-open="reminder"
+    >
+      Set Daily Reminder
+    </button>
+  </aside>
+
+  <!-- =========================
+       DAILY REMINDER DIALOG
+  ========================== -->
+  <dialog
+    class="reminder-dialog"
+    id="reminderModal"
+  >
+    <div class="reminder-card">
+      <button
+        class="dialog-close"
+        id="closeReminderButton"
+        type="button"
+        aria-label="Close reminder settings"
+      >
+        ×
+      </button>
+
+      <p class="eyebrow">
+        DAILY SYNAXARIUM REMINDER
+      </p>
+
       <h2>What time should we meet?</h2>
-      <p>Choose a time. This preview saves your preference on this device. Reliable background delivery requires the included push-notification backend after deployment.</p>
-      <input id="reminderTime" type="time" value="08:00" required>
-      <button type="button" class="primary-button" id="saveReminder">Save reminder time</button>
-      <p id="reminderStatus" class="status"></p>
-    </form>
+
+      <p>
+        Choose when you would like to receive the day’s saints,
+        commemorations, icon, and reflection.
+      </p>
+
+      <label class="reminder-time-field">
+        Daily reminder time
+
+        <input
+          id="reminderTime"
+          type="time"
+          value="08:00"
+          required
+        >
+      </label>
+
+      <p class="timezone-display">
+        Your timezone:
+        <strong id="reminderTimezone">Detecting…</strong>
+      </p>
+
+      <button
+        class="save-reminder-button primary-button"
+        id="saveReminder"
+        type="button"
+      >
+        Save Reminder Time
+      </button>
+
+      <button
+        class="test-reminder-button"
+        id="testDailyReminder"
+        type="button"
+      >
+        Send Test Notification
+      </button>
+
+      <p
+        class="reminder-status status"
+        id="reminderStatus"
+        role="status"
+      ></p>
+
+      <small class="reminder-note">
+        On iPhone, add Koptic Karen to your Home Screen before
+        enabling notifications. A future push service is required
+        for guaranteed daily delivery after the app is closed.
+      </small>
+    </div>
   </dialog>
 
-  <div class="toast" id="toast" role="status"></div>
+  <div
+    class="toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+  ></div>
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
   <footer>
-    <img src="assets/koptic-karen-logo.png" alt="">
+    <img
+      src="assets/koptic-karen-logo.png"
+      alt="Koptic Karen logo"
+    >
+
     <div>
       <strong>Koptic Karen</strong>
       <p>Synaxarium • saints • prayer • Coptic life</p>
     </div>
-    <p>Historical commemorations are organized by their Coptic calendar dates. Original Koptic Karen reflections are clearly separated from source accounts.</p>
+
+    <p>
+      Historical commemorations are organized by their Coptic
+      calendar dates. Original Koptic Karen reflections are
+      clearly separated from source accounts.
+    </p>
   </footer>
+
+  <!-- =========================
+       MENU + REMINDER CONTROLS
+       This is intentionally included
+       inside index.html so the hamburger
+       works even before app.js is edited.
+  ========================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const menu = document.getElementById("slideMenu");
+      const overlay = document.getElementById("menuOverlay");
+      const menuTriggers = document.querySelectorAll(".menu-trigger");
+      const closeMenuButton =
+        document.getElementById("closeMenuButton");
+
+      const reminderModal =
+        document.getElementById("reminderModal");
+
+      const reminderOpeners =
+        document.querySelectorAll('[data-open="reminder"]');
+
+      const closeReminderButton =
+        document.getElementById("closeReminderButton");
+
+      const reminderTime =
+        document.getElementById("reminderTime");
+
+      const reminderTimezone =
+        document.getElementById("reminderTimezone");
+
+      const reminderStatus =
+        document.getElementById("reminderStatus");
+
+      const saveReminder =
+        document.getElementById("saveReminder");
+
+      const testReminder =
+        document.getElementById("testDailyReminder");
+
+      function openMenu() {
+        if (!menu || !overlay) return;
+
+        menu.hidden = false;
+        overlay.hidden = false;
+
+        requestAnimationFrame(function () {
+          menu.classList.add("open");
+          overlay.classList.add("open");
+        });
+
+        menu.setAttribute("aria-hidden", "false");
+
+        menuTriggers.forEach(function (button) {
+          button.setAttribute("aria-expanded", "true");
+        });
+
+        document.body.classList.add("menu-is-open");
+      }
+
+      function closeMenu() {
+        if (!menu || !overlay) return;
+
+        menu.classList.remove("open");
+        overlay.classList.remove("open");
+
+        menu.setAttribute("aria-hidden", "true");
+
+        menuTriggers.forEach(function (button) {
+          button.setAttribute("aria-expanded", "false");
+        });
+
+        document.body.classList.remove("menu-is-open");
+
+        window.setTimeout(function () {
+          menu.hidden = true;
+          overlay.hidden = true;
+        }, 280);
+      }
+
+      function openReminder() {
+        closeMenu();
+
+        if (
+          reminderModal &&
+          typeof reminderModal.showModal === "function"
+        ) {
+          if (!reminderModal.open) {
+            reminderModal.showModal();
+          }
+        }
+      }
+
+      function closeReminder() {
+        if (reminderModal && reminderModal.open) {
+          reminderModal.close();
+        }
+      }
+
+      menuTriggers.forEach(function (button) {
+        button.addEventListener("click", openMenu);
+      });
+
+      closeMenuButton?.addEventListener(
+        "click",
+        closeMenu
+      );
+
+      overlay?.addEventListener(
+        "click",
+        closeMenu
+      );
+
+      document
+        .querySelectorAll(".slide-menu-links a")
+        .forEach(function (link) {
+          link.addEventListener("click", closeMenu);
+        });
+
+      reminderOpeners.forEach(function (button) {
+        button.addEventListener("click", openReminder);
+      });
+
+      closeReminderButton?.addEventListener(
+        "click",
+        closeReminder
+      );
+
+      reminderModal?.addEventListener(
+        "click",
+        function (event) {
+          if (event.target === reminderModal) {
+            closeReminder();
+          }
+        }
+      );
+
+      const timezone =
+        Intl.DateTimeFormat()
+          .resolvedOptions()
+          .timeZone || "Local timezone";
+
+      if (reminderTimezone) {
+        reminderTimezone.textContent = timezone;
+      }
+
+      const savedReminderTime =
+        localStorage.getItem(
+          "kopticKarenReminderTime"
+        );
+
+      if (savedReminderTime && reminderTime) {
+        reminderTime.value = savedReminderTime;
+      }
+
+      saveReminder?.addEventListener(
+        "click",
+        async function () {
+          const selectedTime =
+            reminderTime?.value;
+
+          if (!selectedTime) {
+            reminderStatus.textContent =
+              "Please select a reminder time.";
+            return;
+          }
+
+          localStorage.setItem(
+            "kopticKarenReminderTime",
+            selectedTime
+          );
+
+          if (!("Notification" in window)) {
+            reminderStatus.textContent =
+              "Your time was saved, but this browser does not support notifications.";
+            return;
+          }
+
+          try {
+            const permission =
+              await Notification.requestPermission();
+
+            if (permission === "granted") {
+              reminderStatus.textContent =
+                "Reminder preference saved for " +
+                formatReminderTime(selectedTime) +
+                ".";
+            } else {
+              reminderStatus.textContent =
+                "The time was saved, but notification permission was not granted.";
+            }
+          } catch (error) {
+            console.error(error);
+
+            reminderStatus.textContent =
+              "The time was saved, but notifications could not be enabled.";
+          }
+        }
+      );
+
+      testReminder?.addEventListener(
+        "click",
+        async function () {
+          if (!("Notification" in window)) {
+            reminderStatus.textContent =
+              "This browser does not support notifications.";
+            return;
+          }
+
+          const permission =
+            await Notification.requestPermission();
+
+          if (permission !== "granted") {
+            reminderStatus.textContent =
+              "Please allow notifications before testing.";
+            return;
+          }
+
+          try {
+            if ("serviceWorker" in navigator) {
+              const registration =
+                await navigator.serviceWorker.ready;
+
+              await registration.showNotification(
+                "Today in the Synaxarium ✣",
+                {
+                  body:
+                    document.querySelector(
+                      "#modalTitle, #storyContent h2"
+                    )?.textContent ||
+                    "Open Koptic Karen to meet today’s saints.",
+
+                  icon: "assets/icon-192.png",
+                  badge: "assets/icon-192.png",
+
+                  data: {
+                    url:
+                      window.location.origin +
+                      window.location.pathname +
+                      "#today"
+                  }
+                }
+              );
+
+              reminderStatus.textContent =
+                "Test notification sent.";
+            } else {
+              new Notification(
+                "Today in the Synaxarium ✣",
+                {
+                  body:
+                    "Open Koptic Karen to meet today’s saints.",
+                  icon: "assets/icon-192.png"
+                }
+              );
+
+              reminderStatus.textContent =
+                "Test notification sent.";
+            }
+          } catch (error) {
+            console.error(error);
+
+            reminderStatus.textContent =
+              "The test could not be sent. Install the app and try again.";
+          }
+        }
+      );
+
+      document.addEventListener(
+        "keydown",
+        function (event) {
+          if (event.key === "Escape") {
+            closeMenu();
+            closeReminder();
+          }
+        }
+      );
+    });
+
+    function formatReminderTime(value) {
+      const parts = value.split(":");
+      const hours = Number(parts[0]);
+      const minutes = Number(parts[1]);
+
+      return new Date(
+        2000,
+        0,
+        1,
+        hours,
+        minutes
+      ).toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit"
+      });
+    }
+  </script>
 </body>
 </html>
