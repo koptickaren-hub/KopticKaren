@@ -74,3 +74,151 @@ dialog{width:min(700px,calc(100% - 26px));border:0;border-radius:20px;padding:0;
     );
   }
 }
+/* ===== Desktop overflow and layout repair ===== */
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  min-width: 0;
+}
+
+.topbar {
+  width: 100%;
+  max-width: 100%;
+}
+
+.app-layout {
+  width: 100%;
+  max-width: 100%;
+}
+
+main {
+  width: 100%;
+  max-width: 100%;
+  grid-template-columns:
+    minmax(260px, 320px)
+    minmax(0, 1fr)
+    minmax(250px, 300px);
+}
+
+.content-column {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.today-card,
+.calendar-section,
+.saints-section,
+.prayer-section,
+.install-section {
+  width: 100%;
+  max-width: 100%;
+}
+
+.calendar-grid {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.day-cell {
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.day-cell i,
+.day-cell p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.right-rail {
+  width: 100%;
+  min-width: 0;
+}
+
+.apparel-rail {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Medium desktop and laptop screens */
+@media (max-width: 1250px) {
+  main {
+    grid-template-columns:
+      minmax(240px, 285px)
+      minmax(0, 1fr);
+  }
+
+  .right-rail {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 950px) {
+  main {
+    display: block;
+  }
+
+  .apparel-rail {
+    position: relative;
+    top: auto;
+    width: 100%;
+    height: auto;
+  }
+
+  .content-column {
+    width: 100%;
+  }
+}
+
+/* Phone */
+@media (max-width: 760px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  button,
+  .button,
+  nav a {
+    min-height: 44px;
+  }
+
+  .calendar-grid {
+    gap: 4px;
+  }
+
+  .day-cell {
+    min-height: 68px;
+    padding: 6px 4px;
+  }
+
+  .day-cell i,
+  .day-cell p {
+    display: none;
+  }
+
+  .mobile-nav {
+    padding-bottom: max(
+      8px,
+      env(safe-area-inset-bottom)
+    );
+  }
+
+  .topbar {
+    padding-top: max(
+      8px,
+      env(safe-area-inset-top)
+    );
+  }
+}
