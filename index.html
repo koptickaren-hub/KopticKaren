@@ -19,6 +19,75 @@
   <script src="data/synaxarium-data.js"></script>
   <script src="app.js" defer></script>
 </head>
+   </button>
+  </div>
+
+  <nav class="slide-menu-links" aria-label="Expanded navigation">
+    <a href="#today">Today’s Synaxarium</a>
+    <a href="#calendar">Coptic Calendar</a>
+    <a href="#saints">All Saints</a>
+    <a href="#prayer">Prayer Requests</a>
+    <a href="#apparel">Koptic Karen Apparel</a>
+    <a href="#install">Install the App</a>
+  </nav>
+
+  <button class="menu-reminder-button" id="menuReminderButton" type="button">
+    Set Daily Reminder
+  </button>
+</aside>
+  <dialog class="reminder-dialog" id="reminderDialog">
+  <div class="reminder-card">
+    <button
+      class="dialog-close"
+      id="closeReminderButton"
+      type="button"
+      aria-label="Close reminder settings"
+    >
+      ×
+    </button>
+
+    <p class="eyebrow">DAILY SYNAXARIUM REMINDER</p>
+
+    <h2>What time should we meet?</h2>
+
+    <p>
+      Choose when you would like to receive the day’s saints,
+      commemorations, icon, and reflection.
+    </p>
+
+    <label class="reminder-time-field">
+      Daily reminder time
+
+      <input
+        id="dailyReminderTime"
+        type="time"
+        value="08:00"
+        required
+      >
+    </label>
+
+    <p class="timezone-display">
+      Your timezone:
+      <strong id="reminderTimezone">Detecting…</strong>
+    </p>
+
+    <button class="save-reminder-button" id="saveDailyReminder" type="button">
+      Enable Daily Reminder
+    </button>
+
+    <button class="test-reminder-button" id="testDailyReminder" type="button">
+      Send Test Notification
+    </button>
+
+    <p class="reminder-status" id="dailyReminderStatus" role="status"></p>
+
+    <small class="reminder-note">
+      On iPhone, add Koptic Karen to your Home Screen before enabling
+      notifications. Reliable notifications after the app is closed will
+      require a web-push service when the site is fully launched.
+    </small>
+  </div>
+</dialog>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
@@ -31,10 +100,16 @@
       </span>
     </a>
     <div class="header-actions">
-      <button data-open="reminder"><span>♧</span><small>Reminders</small></button>
+      <button id="reminderButton" type="button">
+        <span aria-hidden="true">♧</span>
+        <small>Reminders</small>
+    </button>      
       <button id="savedHeader"><span>♡</span><small>Saved</small></button>
       <button id="searchHeader"><span>⌕</span><small>Search</small></button>
-      <button id="menuButton"><span>☰</span><small>Menu</small></button>
+      <button id="menuButton" type="button" aria-expanded="false">
+        <span aria-hidden="true">☰</span>
+        <small>Menu</small>
+</button>    
     </div>
   </header>
 
